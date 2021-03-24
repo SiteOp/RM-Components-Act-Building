@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_ACT_BUILDING_TITLE_LIST_VIEW_BUILDINGS" option="View">
+        <message>
+                        <![CDATA[COM_ACT_BUILDING_TITLE_LIST_VIEW_BUILDINGS_DESC]]>
+        </message>
+	</layout>
+	
+</metadata>
