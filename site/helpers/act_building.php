@@ -68,6 +68,53 @@ class Act_buildingHelpersAct_building
 		return explode(',', $db->loadResult());
 	}
 
+	/**
+	 * Liste der Sektoren in diesem Gebäude/Mastersektor
+	 *
+	 * @param   int     $id
+	 *
+	 * @return  array  
+	 */
+	public static function getSectors($id)
+	{
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query
+			->select(array('sector, id'))
+			->from('#__act_sector')
+			->where('state = 1')
+			->where('building = ' . (int) $id);
+
+	    $db->setQuery($query);
+        $result = $db->loadObjectList();
+		return $result; 
+	}
+
+
+	/**
+	 * Liste Linien innerhalb eines Sektors
+	 *
+	 * @param   int   $id Sektor
+	 *
+	 * @return  array  
+	 */
+	public static function getTotalLinesFromSector($id)
+	{
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query
+			->select(array('COUNT(*)'))
+			->from('#__act_line')
+			->where('state = 1')
+			->where('sector = ' . (int) $id);
+
+	    $db->setQuery($query);
+        $result = $db->loadResult();
+		return $result; 
+	}
+
     /**
      * Gets the edit permission for an user
      *

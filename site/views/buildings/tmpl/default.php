@@ -60,7 +60,7 @@ $canDelete  = $user->authorise('core.delete', 'com_act_building');
 					<tr>
 						<th><?php echo HtmlHelper::_('grid.sort',  'COM_ACT_BUILDING_BUILDINGS_BUILDING', 'a.building', $listDirn, $listOrder); ?></th>
 						<?php if ($canEdit || $canDelete): ?>
-							<th class="center" style="width: 5rem;"><?php echo Text::_('COM_ACT_BUILDING_BUILDINGS_ACTIONS'); ?></th>
+							<th class="center" style="width: 5rem;"><?php echo Text::_('COM_ACT_BUILDING_BUILDINGS_EDIT'); ?></th>
 						<?php endif; ?>
 					</tr>
 				</thead>

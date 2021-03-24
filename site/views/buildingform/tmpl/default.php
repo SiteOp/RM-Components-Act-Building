@@ -42,11 +42,12 @@ $canState = JFactory::getUser()->authorise('core.edit.state','com_act_building')
 		<?php else : ?>
 			<?php if (!empty($this->item->id)): ?>
 				<div class="page-header">
-					<h1><?php echo Text::sprintf('COM_ACT_BUILDING_EDIT_ITEM_TITLE', $this->item->id); ?></h1>
+					<h1><?php echo $this->item->building; ?></h1>	
 				</div>
 			<?php else: ?>
 				<div class="page-header">
 					<h1><?php echo Text::_('COM_ACT_BUILDING_ADD_ITEM_TITLE'); ?></h1>
+				
 				</div>
 			<?php endif; ?>
 
