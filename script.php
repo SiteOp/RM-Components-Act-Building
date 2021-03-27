@@ -752,7 +752,68 @@ class com_act_buildingInstallerScript
 		return Text::sprintf('ALTER TABLE %s ADD %s', $table_name, $column_declaration);
 	}
 
-	
+	/**
+	 * Installs plugins for this component
+	 *
+	 * @param   mixed $parent Object who called the install/update method
+	 *
+	 * @return void
+	 */
+	private function installPlugins($parent)
+	{
+		$installation_folder = $parent->getParent()->getPath('source');
+		$app                 = Factory::getApplication();
+
+		/* @var $plugins SimpleXMLElement */
+		$plugins = $parent->get("manifest")->plugins;
+
+		if (count($plugins->children()))
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+
+			foreach ($plugins->children() as $plugin)
+			{
+				$pluginName  = (string) $plugin['plugin'];
+				$pluginGroup = (string) $plugin['group'];
+				$path        = $installation_folder . '/plugins/' . $pluginGroup . '/' . $pluginName;
+				$installer   = new JInstaller;
+
+				if (!$this->isAlreadyInstalled('plugin', $pluginName, $pluginGroup))
+				{
+					$result = $installer->install($path);
+				}
+				else
+				{
+					$result = $installer->update($path);
+				}
+
+				if ($result)
+				{
+					$app->enqueueMessage('Plugin ' . $pluginName . ' was installed successfully');
+				}
+				else
+				{
+					$app->enqueueMessage('There was an issue installing the plugin ' . $pluginName,
+						'error');
+				}
+
+				$query
+					->clear()
+					->update('#__extensions')
+					->set('enabled = 1')
+					->where(
+						array(
+							'type LIKE ' . $db->quote('plugin'),
+							'element LIKE ' . $db->quote($pluginName),
+							'folder LIKE ' . $db->quote($pluginGroup)
+						)
+					);
+				$db->setQuery($query);
+				$db->execute();
+			}
+		}
+	}
 
 	/**
 	 * Check if an extension is already installed in the system
