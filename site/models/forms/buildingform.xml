@@ -20,6 +20,27 @@
            hint="COM_ACT_BUILDING_FORM_LBL_BUILDING_BUILDING"
            class="form-control"
     />
+    <field name="routestotal" 
+           type="number" 
+           filter="integer" 
+           inputtype="number" 
+           min="0" 
+           step="1" 
+           label="Anzahl gewünschter Routen" 
+           class="form-control"
+    />
+    <field name="percentsoll"
+           type="text"
+           label="Json Percent"
+           class="form-control"
+           filter="html"
+    />
+    <field name="routessoll"
+           type="text"
+           label="Json Routes"
+           class="form-control"
+           filter="html"
+    />
     <field name="version_note" type="text" label="JGLOBAL_FIELD_VERSION_NOTE_LABEL" description="" class="inputbox" size="45" labelclass="control-label"/>
   </fieldset>
 </form>

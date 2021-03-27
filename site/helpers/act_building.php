@@ -115,6 +115,29 @@ class Act_buildingHelpersAct_building
 		return $result; 
 	}
 
+	/**
+	 * Liste Linien innerhalb eines Gebäudes bzw,. Mastersektor
+	 *
+	 * @param   int   $id Building
+	 *
+	 * @return  array  
+	 */
+	public static function getTotalLinesFromBuilding($id)
+	{
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query
+			->select(array('COUNT(*)'))
+			->from('#__act_line AS a')
+			->join('LEFT', '#__act_sector AS s ON s.id = a.sector')
+			->where('s.building = ' . (int) $id);
+
+	    $db->setQuery($query);
+        $result = $db->loadResult();
+		return $result; 
+	}
+
     /**
      * Gets the edit permission for an user
      *

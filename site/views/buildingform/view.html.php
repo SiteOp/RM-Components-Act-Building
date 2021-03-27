@@ -46,11 +46,32 @@ class Act_buildingViewBuildingform extends \Joomla\CMS\MVC\View\HtmlView
 		$app  = Factory::getApplication();
 		$user = Factory::getUser();
 
-		$this->state   = $this->get('State');
-		$this->item    = $this->get('Item');
-		$this->params  = $this->state->get('params');
-		$this->canSave = $this->get('CanSave');
-		$this->form		= $this->get('Form');
+		$this->state      = $this->get('State');
+		$this->item       = $this->get('Item');
+		$this->params     = $this->state->get('params');
+		$this->canSave    = $this->get('CanSave');
+		$this->form		  = $this->get('Form');
+
+		// Params ACT
+		$this->params_act = $app->getParams('com_act');
+		$this->c3   	  = $this->params_act['color3grad'];
+		$this->c4  		  = $this->params_act['color4grad'];
+		$this->c5         = $this->params_act['color5grad'];
+		$this->c6         = $this->params_act['color6grad'];
+		$this->c7         = $this->params_act['color7grad'];
+		$this->c8         = $this->params_act['color8grad'];
+		$this->c9         = $this->params_act['color9grad'];
+		$this->c10        = $this->params_act['color10grad'];
+		$this->c11        = $this->params_act['color11grad'];
+		$this->c12        = $this->params_act['color12grad'];
+	
+		// Params Routes-Planning
+		$this->params_rp = $app->getParams('com_routes_planning');
+		$this->record_should             = 1; 						// Soll Soll erfasst werden 0=nein 1=ja
+		$this->record_sector_or_building = 1;						// Sollen die Sollwerte im Sektor oder Gebäude erfasst werden? 1=Gebäude 2=Sektor
+		$this->record_type = 1;                 // Welche Berechnungsart Prozent oder Einzelwerte? Einzel=0 Prozent=1
+
+
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))

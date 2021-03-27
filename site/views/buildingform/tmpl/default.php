@@ -31,8 +31,10 @@ $user    = Factory::getUser();
 $canEdit = Act_buildingHelpersAct_building::canUserEdit($this->item, $user);
 
 
-$canState = JFactory::getUser()->authorise('core.edit.state','com_act_building');
+$canState = Factory::getUser()->authorise('core.edit.state','com_act_building');
 ?>
+
+
 <div id="building">
 	<div class="building-edit front-end-edit">
 		<?php if (!$canEdit) : ?>
@@ -68,8 +70,23 @@ $canState = JFactory::getUser()->authorise('core.edit.state','com_act_building')
 			<div class="form-group row">
 				<div class="col-md-5"><?php echo $this->form->renderField('building'); ?></div>
 			</div>
+			
+			<?php 
+			// Sollwerterfassung 
+			if (1 == $this->record_should) { 				// Sollwerte erfassen?
+				if(1 == $this->record_sector_or_building) { // Wenn Gebäude dann
+					if(1 == $this->record_type) {           // Einzelwert (0) oder Prozente (1)?
+						echo $this->loadTemplate('prozent');
+					} else {
+						
+					};
+				};
+			};
+			?>
+			
+
 			<div class="control-group">
-				<div class="controls mt-1">
+				<div class="controls mt-4">
 					<?php if ($this->canSave): ?>
 						<button type="submit" class="validate btn btn-secondary">
 							<?php echo Text::_('JSUBMIT'); ?>
