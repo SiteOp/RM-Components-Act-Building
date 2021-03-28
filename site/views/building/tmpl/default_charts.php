@@ -13,16 +13,13 @@ use \Joomla\CMS\Factory;
 use \Joomla\CMS\Language\Text;
 
 $doc = Factory::getDocument();
-//$doc->addScript('node_modules/chart.js/dist/Chart.bundle.min.js');
-//$doc->addScript('node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js');
+$doc->addScript('node_modules/chart.js/dist/Chart.bundle.min.js');
+$doc->addScript('node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js');
 $doc->addScript('node_modules/chartjs-plugin-labels/build/chartjs-plugin-labels.min.js');
 
 $json = json_decode($this->item->routessoll, true);
-//print_R($json);
-
 
 // Erstelle Variablen für Gesamtgrad (3.Grad, 4.Grad usw)
-$soll_grade_13 = $json['13']; 
 $soll_grade_3  = $json['3'];  // 3
 $soll_grade_4  = $json['4'];  // 4
 $soll_grade_5  = $json['5'];	 // 5
@@ -33,22 +30,21 @@ $soll_grade_9  = $json['9'];	 // 9
 $soll_grade_10 = $json['10']; // 10
 $soll_grade_11 = $json['11']; // 11
 $soll_grade_12 = $json['12']; // 12
+$soll_grade_13 = $json['13']; // undefiniert
 $soll_grade_array = [$soll_grade_3,$soll_grade_4,$soll_grade_5,$soll_grade_6,$soll_grade_7,$soll_grade_8,$soll_grade_9,$soll_grade_10,$soll_grade_11,$soll_grade_12];
 
-
-
 // Farben
-$color_3  = '#a001f2'; // TODO CONFIG
-$color_4  = '#ffc600';
-$color_5  = '#a86301';
-$color_6  = '#fa3a07';
-$color_7  = '#98c920';
-$color_8  = '#019abc';
-$color_9  = '#a001f2';
-$color_10 = '#2a82cd';
-$color_11 = '#ff00ff';
-$color_12 = '#ffc600';
-$color_13 = '#f2f2f2';
+$color_3  = $this->c3; 
+$color_4  = $this->c4;
+$color_5  = $this->c5;
+$color_6  = $this->c6;
+$color_7  = $this->c7;
+$color_8  = $this->c8;
+$color_9  = $this->c9;
+$color_10 = $this->c10;
+$color_11 = $this->c11;
+$color_12 = $this->c12;
+$color_13 = $this->c13;
 
 // Label für Grad
 $label_13 = 'undefiniert';
