@@ -17,7 +17,8 @@ use \Joomla\CMS\Language\Text;
 
 // Add Script 
 $doc = Factory::getDocument();
-$doc->addScript('components/com_act_building/views/buildingform/tmpl/prozent.min.js', true, true); // Nicht absenden wenn Enter 
+$doc->addScript('components/com_act_building/views/buildingform/tmpl/prozent.js', true, true); 
+//$doc->addScript('components/com_act_building/views/buildingform/tmpl/prozent.min..js', true, true); // !!!!!!!!!!!!!!!!!!!! MIN.JS !!!!!!!!!!!!!!!!!
 $doc->addScript('components/com_act/views/sectorform/tmpl/enternotsend.js'); // Nicht absenden wenn Enter 
 
 $user    = Factory::getUser();
@@ -27,14 +28,13 @@ $canEdit = Act_buildingHelpersAct_building::canUserEdit($this->item, $user);
 $grade_start = 5; 
 $grade_end = 10; 
 
-if(!empty($this->item->id)) {
+if(!empty($this->item->id)) {                            // Nur wenn es die ID bzw. da Gebäude schon gibt
+    $json = json_decode($this->item->percentsoll, true); // Hole die Were aus DB um die Inputfelder vorab zu füllen
 	$total_lines = Act_buildingHelpersAct_building::getTotalLinesFromBuilding($this->item->id);	
 } else {
-	$total_lines = '';
+	$total_lines = 0;
 }
-if(!empty($this->item->percentsoll)) {
-	$json = json_decode($this->item->percentsoll, true); // Hole die Were aus DB um die Inputfelder vorab zu füllen
-}
+
 ?>
 <style>
 .sw_soll  {text-align: center; font-weight: bold;}
@@ -44,16 +44,16 @@ if(!empty($this->item->percentsoll)) {
 .card-body {padding: 0; margin-left: -5px;}
 label {width: 100%; margin-bottom: 0;}
 .lblg {border-bottom: 5px solid;!important;}
-.grade3  {border-color: #a001f2}
-.grade4  {border-color: #ffc600}
-.grade5  {border-color: #a86301}
-.grade6  {border-color: #fa3a07}
-.grade7  {border-color: #98c920}
-.grade8  {border-color: #019abc}
-.grade9  {border-color: #a001f2}
-.grade10 {border-color: #2a82cd}
-.grade11 {border-color: #ff00ff}
-.grade12 {border-color: #444444}
+.grade3  {border-color: <?php echo $this->c3; ?>;}
+.grade4  {border-color: <?php echo $this->c4; ?>;}
+.grade5  {border-color: <?php echo $this->c5; ?>;}
+.grade6  {border-color: <?php echo $this->c6; ?>;}
+.grade7  {border-color: <?php echo $this->c7; ?>;}
+.grade8  {border-color: <?php echo $this->c8; ?>;}
+.grade9  {border-color: <?php echo $this->c9; ?>;}
+.grade10 {border-color: <?php echo $this->c10; ?>;}
+.grade11 {border-color: <?php echo $this->c11; ?>;}
+.grade12 {border-color: <?php echo $this->c12; ?>;}
 .progress {height: 1.3rem; font-size: 120%; font-weight: bold; margin: .3rem 0;}
 </style>			
 

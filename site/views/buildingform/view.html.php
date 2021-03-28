@@ -67,9 +67,9 @@ class Act_buildingViewBuildingform extends \Joomla\CMS\MVC\View\HtmlView
 	
 		// Params Routes-Planning
 		$this->params_rp = $app->getParams('com_routes_planning');
-		$this->record_should             = 1; 						// Soll Soll erfasst werden 0=nein 1=ja
-		$this->record_sector_or_building = 1;						// Sollen die Sollwerte im Sektor oder Gebäude erfasst werden? 1=Gebäude 2=Sektor
-		$this->record_type = 1;                 // Welche Berechnungsart Prozent oder Einzelwerte? Einzel=0 Prozent=1
+		$this->record_should = $this->params_rp['record_should']; 						  // Soll Soll erfasst werden 0=nein 1=ja
+		$this->record_sector_or_building = $this->params_rp['record_sector_or_building']; // Sollen die Sollwerte im Sektor oder Gebäude erfasst werden? 1=Gebäude 2=Sektor
+		$this->record_type = $this->params_rp['record_type'];                             // Welche Berechnungsart Prozent oder Einzelwerte? Einzel=0 Prozent=1
 
 
 

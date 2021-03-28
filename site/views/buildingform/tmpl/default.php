@@ -72,14 +72,12 @@ $canState = Factory::getUser()->authorise('core.edit.state','com_act_building');
 			</div>
 			
 			<?php 
-			// Sollwerterfassung 
-			if (1 == $this->record_should) { 				// Sollwerte erfassen?
-				if(1 == $this->record_sector_or_building) { // Wenn Gebäude dann
-					if(1 == $this->record_type) {           // Einzelwert (0) oder Prozente (1)?
-						echo $this->loadTemplate('prozent');
-					} else {
-						
-					};
+			// Wenn Sollerfassung innerhalb des Gebäudes
+			if ((1 == $this->record_should) && (1 == $this->record_sector_or_building)) { 				
+				if(1 == $this->record_type) {           // Einzelwert (0) oder Prozente (1)?
+					echo $this->loadTemplate('prozent');
+				} else {
+					echo 'Einzelwerte noch nicht integriert';	
 				};
 			};
 			?>

@@ -43,6 +43,7 @@
 		let total_line = $('#total_lines ').text();			// Hole die Gesamtzahl der Linien 
 		let density = (parseFloat(routestotal/total_line).toFixed(1)); // Routendichte berechnen
 		$('#density').text(check(density));				   // Routendichte eintragen
+
 		let sum_percent =  $('#percent_val input').sum();	// Summe der Prozentwerte
 		$('#jform_percent').val(sum_percent);			    // Sum/Prozente in das Inputfield der Progressbar eintragen. Formular kann bei über 100 nicht gesendet werden
 		makeProgress(sum_percent); 							// Funktion der Progressbar aufrufen
@@ -62,6 +63,7 @@
 		let obj_percent = {'0': percent0,'3':percent3, '4':percent4,'5':percent5,'6':percent6, '7':percent7,'8':percent8,'9':percent9, '10':percent10,'11':percent11,'12':percent12};
 		let json_percent = JSON.stringify(obj_percent);		// Konvertierung  JS object to JSON string
 		$('#percentsoll').val(json_percent);  				// Werte als Value des Hidden Fields percentsoll verwenden
+
 		let total3  = ((routestotal/100) * percent3);       // Berechnung der Routenanzahl ((Gesamt Routenanzahl / 100) X Prozentwert)
 		let total4  = ((routestotal/100) * percent4);
 		let total5  = ((routestotal/100) * percent5);
@@ -72,6 +74,7 @@
 		let total10 = ((routestotal/100) * percent10);
 		let total11 = ((routestotal/100) * percent11);
 		let total12 = ((routestotal/100) * percent12);
+
 		$('#routes_grade3').val(parseFloat(total3).toFixed(1));// Trage die berechnete Routenanzahl in das Readonly-Field
 		$('#routes_grade4').val(parseFloat(total4).toFixed(1));
 		$('#routes_grade5').val(parseFloat(total5).toFixed(1));
@@ -82,6 +85,7 @@
 		$('#routes_grade10').val(parseFloat(total10).toFixed(1));
 		$('#routes_grade11').val(parseFloat(total11).toFixed(1));
 		$('#routes_grade12').val(parseFloat(total12).toFixed(1));
+
 		let routes3  = check($('#routes_grade3').val());      // Var für das JSON Objekt der Routen
 		let routes4  = check($('#routes_grade4').val());
 		let routes5  = check($('#routes_grade5').val());
@@ -98,10 +102,13 @@
 		let obj_routes = {'3':routes3, '4':routes4,'5':routes5,'6':routes6, '7':routes7,'8':routes8,'9':routes9, '10':routes10,'11':routes11,'12':routes12,'13':routes_undified};
 		let json_routes = JSON.stringify(obj_routes);		// Konvertierung  JS object to JSON string
 		$('#routessoll').val(json_routes);  				// Werte als Value des Hidden Fields routessoll verwenden
-		//console.log(json_routes);
 	};
+
+	
 	$(document).ready(function () {                          // Beim Laden die Daten holen und eintragen
-			loadData();
+		loadData();
+		$('#jform_routestotal').attr('required', true);      // Anzahl gewünschter Routen wird Pflichtfeld
+
 	});
 	$('#gradetable, #jform_routestotal').change(function() { // Nach Veränderung der Daten nochmals die Daten holen
 		loadData();
