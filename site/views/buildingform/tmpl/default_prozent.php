@@ -9,78 +9,58 @@
 // No direct access
 defined('_JEXEC') or die;
 
-use \Joomla\CMS\HTML\HTMLHelper;
 use \Joomla\CMS\Factory;
-use \Joomla\CMS\Uri\Uri;
-use \Joomla\CMS\Router\Route;
 use \Joomla\CMS\Language\Text;
 
 // Add Script 
 $doc = Factory::getDocument();
+$doc->addScript('node_modules/chart.js/dist/Chart.bundle.min.js');
+$doc->addScript('node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js');
 $doc->addScript('components/com_act_building/views/buildingform/tmpl/prozent.js', true, true); 
-//$doc->addScript('components/com_act_building/views/buildingform/tmpl/prozent.min..js', true, true); // !!!!!!!!!!!!!!!!!!!! MIN.JS !!!!!!!!!!!!!!!!!
 $doc->addScript('components/com_act/views/sectorform/tmpl/enternotsend.js'); // Nicht absenden wenn Enter 
 
 $user    = Factory::getUser();
 $canEdit = Act_buildingHelpersAct_building::canUserEdit($this->item, $user);
 
-// PARAMS TODO
-$grade_start = 5; 
-$grade_end = 10; 
+// PARAMS Routes-Planning
+$grade_start = $this->grade_start_percent; 
+$grade_end = $this->grade_end_percent; 
 
-if(!empty($this->item->id)) {                            // Nur wenn es die ID bzw. da Gebäude schon gibt
-    $json = json_decode($this->item->percentsoll, true); // Hole die Were aus DB um die Inputfelder vorab zu füllen
+if(!empty($this->item->id)) {                            // Nur wenn es die ID bzw. das Gebäude schon gibt
+    $json = json_decode($this->item->percentsoll, true); // Hole die Werte aus DB um die Inputfelder vorab zu füllen
 	$total_lines = Act_buildingHelpersAct_building::getTotalLinesFromBuilding($this->item->id);	
 } else {
 	$total_lines = 0;
 }
-
 ?>
-<style>
-.sw_soll  {text-align: center; font-weight: bold;}
-.sw_soll .form-control {text-align: center; padding-left: 25px!important;}
-#gradetable input {padding: 0; width: 100%; min-height: 1.5rem; text-align: center;}
-#gradetable .table td {padding: 4px;}
-.card-body {padding: 0; margin-left: -5px;}
-label {width: 100%; margin-bottom: 0;}
-.lblg {border-bottom: 5px solid;!important;}
-.grade3  {border-color: <?php echo $this->c3; ?>;}
-.grade4  {border-color: <?php echo $this->c4; ?>;}
-.grade5  {border-color: <?php echo $this->c5; ?>;}
-.grade6  {border-color: <?php echo $this->c6; ?>;}
-.grade7  {border-color: <?php echo $this->c7; ?>;}
-.grade8  {border-color: <?php echo $this->c8; ?>;}
-.grade9  {border-color: <?php echo $this->c9; ?>;}
-.grade10 {border-color: <?php echo $this->c10; ?>;}
-.grade11 {border-color: <?php echo $this->c11; ?>;}
-.grade12 {border-color: <?php echo $this->c12; ?>;}
-.progress {height: 1.3rem; font-size: 120%; font-weight: bold; margin: .3rem 0;}
-</style>			
+		
+	<h3 class="mt-5"><?php echo Text::_('COM_ACT_BUILDING_SHOULD_DISTRIBUTE_GRADES'); ?></h3>
+	<div><?php echo Text::_('COM_ACT_BUILDING_TOTAL_LINES'); ?>: <span id="total_lines"><?php echo $total_lines ; ?></span></div>
+	<div><?php echo Text::_('COM_ACT_BUILDING_ROUTES_DENSITY'); ?>: <span id="density"> </span> </div>
 
-		<h3 class="mt-5">Soll-Verteilung SW</h3>
-		<div>Gesamtzahl Linie: <span id="total_lines"><?php echo $total_lines ; ?></span></div>
-		<div>Routendichte: <span id="density"> </span> </div>
+	<div class="row mt-2">
+       <div class="col-sm-5"><?php echo $this->form->renderField('routestotal'); ?></div>
+    </div>
 
-		<div class="row">
-            <div class="col-sm-6"><?php echo $this->form->renderField('routestotal'); ?></div>
-        </div>
-        
-          
     <div id="gradetable" class="table-responsive mt-4">
         <table class="table table-bordered text-center" id="datatable">
             <thead>
-                <tr>
-				<td>Grad</td>
-					<?php for ($i = $grade_start; $i <= $grade_end; $i++) : ?>
-						<td class="grade">
-							<label class="lblg grade<?php echo $i; ?>"><?php echo $i; ?></label>
-						</td>
+                <tr id="gradelabel">
+				<td><?php echo Text::_('COM_ACT_BUILDING_GRADE'); ?></td>
+                <?php for ($i = $grade_start; $i <= $grade_end; $i++) : ?>
+                     <?php $color = "c$i";
+                           $varname = 'color';
+                           ${$varname.$i} = $this->$color; 
+                     ?>
+					<td class="grade">
+						<label id="gradelbl<?php echo $i; ?>" class="lblg grade<?php echo $i; ?>" style="border-color:<?php echo $this->$color; ?>"><?php echo $i; ?></label>
+					</td>
 					<?php endfor; ?>
                 </tr>
             </thead>
             <tbody>
 			<tr id="percent_val"> 
-                    <td>Prozent</td>   
+                    <td><?php echo Text::_('COM_ACT_BUILDING_PERCENT'); ?></td>   
 					<?php for ($i = $grade_start; $i <=$grade_end; $i++) : ?>
 						<td class="grade">
 							<input type="number" id="percent<?php echo $i; ?>" class="form-control" min="0" max="100" step="1" value="<?php echo $json[$i]; ?>">
@@ -88,7 +68,7 @@ label {width: 100%; margin-bottom: 0;}
 					<?php endfor; ?>
                 </tr>
 				<tr id="allroutes">
-                    <td  width="110px">Anzahl Routen</td>
+                    <td  width="110px"><?php echo Text::_('COM_ACT_BUILDING_NUMBER_ROUTES'); ?></td>
                     <?php for($i = $grade_start; $i <= $grade_end; $i++) : ?>
                         <td>
 						<input type="text" id="routes_grade<?php echo $i; ?>" class="form-control" name="routes_grade<?php echo $i; ?>" value="" readonly>
@@ -96,7 +76,7 @@ label {width: 100%; margin-bottom: 0;}
                     <?php endfor; ?>
                 </tr>
 				<tr>
-                    <td>Erfüllung</td>
+                    <td><?php echo Text::_('COM_ACT_BUILDING_FULFILLMENT'); ?></td>
                     <td colspan="11">
                         <div class="progress">
                             <span class="sr-only"><input type="number" name="jform[percent]" id="jform_percent" value="" max="100" step="1"></span>

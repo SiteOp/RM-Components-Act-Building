@@ -97,6 +97,8 @@
 		let routes11 = check($('#routes_grade11').val());
 		let routes12 = check($('#routes_grade12').val());
 		let routes_undified = (routestotal - $('#allroutes input').sum() ); // Wenn nicht 100% dann übrige Routen
+		routes_undified = parseFloat(routes_undified).toFixed(0);
+		console.log(routes_undified); 
 
 		// Erstelle ein Object mit den Werten Grad und Routenanzahl
 		let obj_routes = {'3':routes3, '4':routes4,'5':routes5,'6':routes6, '7':routes7,'8':routes8,'9':routes9, '10':routes10,'11':routes11,'12':routes12,'13':routes_undified};
@@ -104,12 +106,97 @@
 		$('#routessoll').val(json_routes);  				// Werte als Value des Hidden Fields routessoll verwenden
 	};
 
-	
 	$(document).ready(function () {                          // Beim Laden die Daten holen und eintragen
 		loadData();
-		$('#jform_routestotal').attr('required', true);      // Anzahl gewünschter Routen wird Pflichtfeld
+		updateData();
+		$('#jform_routestotal').attr('required', true).prop('min',1); // Anzahl gewünschter Routen wird Pflichtfeld. Zahl min. 1
 
 	});
-	$('#gradetable, #jform_routestotal').change(function() { // Nach Veränderung der Daten nochmals die Daten holen
+	$('#gradetable, #jform_routestotal').change(function() { // Nach Veränderung nochmals die Daten holen
 		loadData();
+		updateData();
 	});
+
+
+    // Defaults für Charts
+    Chart.helpers.merge(Chart.defaults.global.plugins.datalabels, {
+        align: 'end',
+        anchor: 'end',
+        color: '#555',
+        offset: 0,
+        font: {
+            size: 16,
+            weight: 'bold'
+        },
+    });
+
+    let config = {
+        type: 'bar',
+        data: {
+			labels: [],
+            datasets: [{
+                data: [],
+				backgroundColor: [],
+            }]
+        },
+        // Abstand von Legend nach unten 3.Grade ...
+        plugins: [{
+            beforeInit: function(chart, options) {
+             chart.legend.afterFit = function() {this.height = this.height + 20;};
+            }
+        }],
+        options: {
+            layout: {
+                padding: {left: 78}
+            },
+            legend: { display: false },
+            animation: {duration: 0 },
+            hover: { animationDuration: 0 },
+            responsiveAnimationDuration: 0 ,
+            scales: {
+                yAxes: [{
+                    ticks: {display: false},
+                    scaleLabel:{
+                            display: true,
+                            labelString: 'Anzahl Routen',
+                            fontSize: 18
+                    }
+                }]
+            }
+        }
+    };
+
+
+    let ctx = document.getElementById("myChart").getContext("2d");
+    let myChart = new Chart(ctx, config);
+
+    // Hole die Daten aus dem Feld welches die Anzahl Routen berechnet
+    function updateData(){
+
+		// Erstelle ein Array aus den Readonly-Fields 
+		let arrayRoutes = [];    
+		$( "#allroutes input" ).each(function( index ) {
+			arrayRoutes.push($( this ).val());
+		  });
+
+		// Erstelle das Array für die Label
+		let arrayLabel = [];    
+		$( "#gradelabel label" ).each(function( index ) {
+			arrayLabel.push($( this ).text());
+		});
+	
+		// Erstelle das Array für die Farben
+		let arrayColor = [];    
+		$( "#gradelabel label" ).each(function( index ) {
+			arrayColor.push($( this ).css("border-top-color"));
+		});
+
+        let dataObj =  arrayRoutes;
+        let newData=[];
+        newData = dataObj;
+        newData.push()
+		myChart.data.labels = arrayLabel,                       // Update Label
+        myChart.data.datasets[0].data = newData;				// Update Data Routes
+        myChart.data.datasets[0].backgroundColor = arrayColor;  // Update BackgroundColors
+        myChart.update();
+    };

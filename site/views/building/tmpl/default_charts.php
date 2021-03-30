@@ -59,7 +59,6 @@ $label_10 = '10.Grad';
 $label_11 = '11.Grad';
 $label_12 = '12.Grad';
 
-
 // Ist Werte für Chart
 $soll_label = '';
 $soll_color = '';
@@ -75,8 +74,7 @@ for ($i = 3; $i <= 13; $i++) {
     $soll_data .= $$soll_grade . ',';
     $soll_color .= '"'.$$color.'",';
     $soll_label .= '"'.$$label.'",';
-   } 
-
+  } 
 }
 
 ?>
@@ -151,5 +149,5 @@ for ($i = 3; $i <= 13; $i++) {
   </script>
 
 <?php else : ?>
-  <p>Keine Sollwerte erfasst.</p>
+  <p><?php echo Text::_('COM_ACT_BUILDING_NO_SHOULD_VALUES'); ?></p>
 <?php endif; ?>

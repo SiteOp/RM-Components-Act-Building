@@ -70,7 +70,8 @@ class Act_buildingViewBuildingform extends \Joomla\CMS\MVC\View\HtmlView
 		$this->record_should = $this->params_rp['record_should']; 						  // Soll Soll erfasst werden 0=nein 1=ja
 		$this->record_sector_or_building = $this->params_rp['record_sector_or_building']; // Sollen die Sollwerte im Sektor oder Gebäude erfasst werden? 1=Gebäude 2=Sektor
 		$this->record_type = $this->params_rp['record_type'];                             // Welche Berechnungsart Prozent oder Einzelwerte? Einzel=0 Prozent=1
-
+		$this->grade_start_percent = $this->params_rp['grade_start_percent'];             // Prozentwerte - Niedrigster Schwierigkeitsgrad
+		$this->grade_end_percent = $this->params_rp['grade_end_percent'];                 // Prozentwerte - Höchster  Schwierigkeitsgrad
 
 
 		// Check for errors.

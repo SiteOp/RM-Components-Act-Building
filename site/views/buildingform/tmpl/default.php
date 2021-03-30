@@ -29,9 +29,8 @@ $menuparams = $menu->getParams($itemId);
 
 $user    = Factory::getUser();
 $canEdit = Act_buildingHelpersAct_building::canUserEdit($this->item, $user);
-
-
 $canState = Factory::getUser()->authorise('core.edit.state','com_act_building');
+
 ?>
 
 
@@ -71,16 +70,26 @@ $canState = Factory::getUser()->authorise('core.edit.state','com_act_building');
 				<div class="col-md-5"><?php echo $this->form->renderField('building'); ?></div>
 			</div>
 			
-			<?php 
-			// Wenn Sollerfassung innerhalb des Gebäudes
-			if ((1 == $this->record_should) && (1 == $this->record_sector_or_building)) { 				
-				if(1 == $this->record_type) {           // Einzelwert (0) oder Prozente (1)?
-					echo $this->loadTemplate('prozent');
-				} else {
-					echo 'Einzelwerte noch nicht integriert';	
-				};
-			};
-			?>
+			<?php // Wenn Sollerfassung innerhalb des Gebäudes ?>
+			<?php if ((1 == $this->record_should) && (1 == $this->record_sector_or_building)) :?>				
+				<?php if(1 == $this->record_type) :  // Prozente (1)? ?>       
+					<?php echo $this->loadTemplate('prozent'); ?>
+					<div id="chart-percent">
+						<div class="row mt-5">
+							<div class="col">
+								<div class="card">
+									<div class="card-body">
+										<canvas id="myChart" height="80"></canvas>
+									</div>
+								</div>
+							</div> 
+						</div>
+					</div>
+				<?php  else : // Einzelwerte ?>
+					<?php echo 'Einzelwerte noch nicht integriert';	;?>
+				<?php endif; ?>
+			<?php endif; ?>
+			
 			
 
 			<div class="control-group">
