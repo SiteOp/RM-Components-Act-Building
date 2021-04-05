@@ -16,7 +16,8 @@ use \Joomla\CMS\Language\Text;
 $doc = Factory::getDocument();
 $doc->addScript('node_modules/chart.js/dist/Chart.bundle.min.js');
 $doc->addScript('node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js');
-$doc->addScript('components/com_act_building/views/buildingform/tmpl/prozent.js', true, true); 
+//$doc->addScript('components/com_act_building/views/buildingform/tmpl/prozent.js', true, true); 
+$doc->addScript('media/com_routes_planning/js/prozent.js', true, true); 
 $doc->addScript('components/com_act/views/sectorform/tmpl/enternotsend.js'); // Nicht absenden wenn Enter 
 
 $user    = Factory::getUser();

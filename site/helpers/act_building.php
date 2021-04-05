@@ -75,7 +75,7 @@ class Act_buildingHelpersAct_building
 	 *
 	 * @return  array  
 	 */
-	public static function getSectors($id)
+	public static function getAllSectors($id)
 	{
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);

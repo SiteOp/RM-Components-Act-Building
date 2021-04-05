@@ -20,7 +20,7 @@ $app = Factory::getApplication();
 $params = $app->getParams();
 $params         = $app->getParams('com_routes_planning');
 
-$sectors = Act_buildingHelpersAct_building::getSectors($this->item->id);
+$sectors = Act_buildingHelpersAct_building::getAllSectors($this->item->id);
 $total_lines = Act_buildingHelpersAct_building::getTotalLinesFromBuilding($this->item->id);	
 
 ?>

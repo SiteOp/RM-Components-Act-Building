@@ -30,9 +30,7 @@ $menuparams = $menu->getParams($itemId);
 $user    = Factory::getUser();
 $canEdit = Act_buildingHelpersAct_building::canUserEdit($this->item, $user);
 $canState = Factory::getUser()->authorise('core.edit.state','com_act_building');
-
 ?>
-
 
 <div id="building">
 	<div class="building-edit front-end-edit">
@@ -88,9 +86,7 @@ $canState = Factory::getUser()->authorise('core.edit.state','com_act_building');
 				<?php  else : // Einzelwerte ?>
 					<?php echo 'Einzelwerte noch nicht integriert';	;?>
 				<?php endif; ?>
-			<?php endif; ?>
-			
-			
+			<?php endif; ?>			
 
 			<div class="control-group">
 				<div class="controls mt-4">
