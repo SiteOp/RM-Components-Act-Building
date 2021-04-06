@@ -73,7 +73,6 @@ class Act_buildingViewBuildingform extends \Joomla\CMS\MVC\View\HtmlView
 		$this->grade_start_percent = $this->params_rp['grade_start_percent'];             // Prozentwerte - Niedrigster Schwierigkeitsgrad
 		$this->grade_end_percent = $this->params_rp['grade_end_percent'];                 // Prozentwerte - Höchster  Schwierigkeitsgrad
 
-
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{

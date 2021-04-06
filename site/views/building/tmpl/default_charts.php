@@ -20,17 +20,17 @@ $doc->addScript('node_modules/chartjs-plugin-labels/build/chartjs-plugin-labels.
 $json = json_decode($this->item->routessoll, true);
 
 // Erstelle Variablen für Gesamtgrad (3.Grad, 4.Grad usw)
-$soll_grade_3  = $json['3'];  // 3
-$soll_grade_4  = $json['4'];  // 4
-$soll_grade_5  = $json['5'];	 // 5
-$soll_grade_6  = $json['6'];	 // 6
-$soll_grade_7  = $json['7'];	 // 7
-$soll_grade_8  = $json['8'];	 // 8
-$soll_grade_9  = $json['9'];	 // 9
-$soll_grade_10 = $json['10']; // 10
-$soll_grade_11 = $json['11']; // 11
-$soll_grade_12 = $json['12']; // 12
-$soll_grade_13 = $json['13']; // undefiniert
+$soll_grade_3  = $json['g3'];  // 3
+$soll_grade_4  = $json['g4'];  // 4
+$soll_grade_5  = $json['g5'];	 // 5
+$soll_grade_6  = $json['g6'];	 // 6
+$soll_grade_7  = $json['g7'];	 // 7
+$soll_grade_8  = $json['g8'];	 // 8
+$soll_grade_9  = $json['g9'];	 // 9
+$soll_grade_10 = $json['g10']; // 10
+$soll_grade_11 = $json['g11']; // 11
+$soll_grade_12 = $json['g12']; // 12
+$soll_grade_13 = $json['g13']; // undefiniert
 $soll_grade_array = [$soll_grade_3,$soll_grade_4,$soll_grade_5,$soll_grade_6,$soll_grade_7,$soll_grade_8,$soll_grade_9,$soll_grade_10,$soll_grade_11,$soll_grade_12];
 
 // Farben
@@ -59,7 +59,7 @@ $label_10 = '10.Grad';
 $label_11 = '11.Grad';
 $label_12 = '12.Grad';
 
-// Ist Werte für Chart
+// Soll Werte für Chart
 $soll_label = '';
 $soll_color = '';
 $soll_data = ''; 

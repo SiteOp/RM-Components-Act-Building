@@ -69,7 +69,7 @@ $canState = Factory::getUser()->authorise('core.edit.state','com_act_building');
 			</div>
 			
 			<?php // Wenn Sollerfassung innerhalb des Gebäudes ?>
-			<?php if ((1 == $this->record_should) && (1 == $this->record_sector_or_building)) :?>				
+			<?php if ((1 == $this->record_should) AND (1 == $this->record_sector_or_building)) :?>				
 				<?php if(1 == $this->record_type) :  // Prozente (1)? ?>       
 					<?php echo $this->loadTemplate('prozent'); ?>
 					<div id="chart-percent">
